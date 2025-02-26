@@ -27,63 +27,43 @@ int get_largest(const vector<int> &v);
 bool find(const vector<int> &v, int target);
 
 
-int main(){
-    //Stores all added numbers
-vector<int>numbers{}; 
-//stores selected option
-char selectedOption{' '};
-
-    do{
-        cout << "Please select any options below to perform action: " << endl;
-        cout << "===================================================" << endl;
-        cout << "\nP - Print numbers" << endl;
-        cout << "A - Add a number" << endl;
-        cout << "M - Display mean of the numbers" << endl;
-        cout << "S - Display the smallest number" << endl;
-        cout << "L - Display the largest number" << endl;
-        cout << "Q - Quit" << endl << endl;
-        cout << "Enter your choice: " << endl;
-        // Store selected input options
-        cin >> selectedOption;
-        // convert input to uppercase
-        selectedOption = toupper(selectedOption); 
-        //Returns all the numbers added in the operation
-        if(selectedOption=='P'){
-            //Print the numbers if P is selected
-            print();
-        }else if(selectedOption=='A'){
-            //Adds a new number if 'A' is selected
-            addNum();
-        }else if(selectedOption=='M'){
-            //Calculates the mean of the sslelcted numbers
-            mean();
-        //Displays the smallest element of the vector
-        }else if(selectedOption=='S'){
-            if(numbers.empty()){
-                cout << "Unable to determine the smallest number - list is empty" << endl; 
-            }else{
-                int smallestNum = *min_element(numbers.begin(), numbers.end());
-            cout << "The smallest number is " << smallestNum << endl;
-            }
-        //Displays the largest element of the vector
-        }else if(selectedOption=='L'){
-            if(numbers.empty()){
-                cout << "Unable to determine the largest number - list is empty" << endl; 
-            }else{
-                int largestNum = *max_element(numbers.begin(), numbers.end());
-            cout << "The largest number is " << largestNum << endl;
-            }
-        //Terminates the operation
-        }else if(selectedOption=='Q'){
-            cout << "Goodbye" << endl;
-        }else{
-            cout << "Unknown selection, please try again" << endl;
+int main() {
+    
+    vector<int> numbers;        // our list of numbers
+    char selection {};
+    
+    do {
+        display_menu();
+        selection = get_selection();
+        switch (selection) {
+            case 'P': 
+                handle_display(numbers); 
+                break;
+            case 'A': 
+                handle_add(numbers);
+                break;
+            case 'M':
+                handle_mean(numbers);
+                break;
+            case 'S':
+                handle_smallest(numbers);
+                break;
+            case 'L':
+                handle_largest(numbers);
+                break;
+            case 'F':
+                handle_find(numbers);
+                break;
+            case 'Q':
+                handle_quit();
+                break;
+            default:
+                handle_unknown();
         }
-    
-    }while(selectedOption!='Q');
-    
+    } while (selection != 'Q');
+    cout << endl;
     return 0;
-    }
+}
     
 //This function displays the menu to the console.
 void display_menu() {
